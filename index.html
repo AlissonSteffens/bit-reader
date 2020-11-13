@@ -13,12 +13,6 @@
         <textarea name="" id="image"></textarea>
         <button onclick="create_image()">Fazer Imagem</button>
     </div>
-
-    <div id= "file-js">
-
-        <input type = "file" name="resume"></input>
-
-    </div>
     
     <canvas id="myCanvas" width="800" height="600"></canvas>
     <script>
@@ -69,50 +63,6 @@
                 j++
             });
         }
-
-
-// Check for the File API support.
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      document.querySelector('#file-js input[type=file]').addEventListener('change', handleFileSelect, false);
-      
-    } else {
-      // alert('The File APIs are not fully supported in this browser.');
-    }
-
-
-    function handleFileSelect(evt) {
-      var f = evt.target.files[0]; // FileList object
-      var reader = new FileReader();
-      // Closure to capture the file information.
-      reader.onload = (function(theFile) {
-        return function(e) {
-          var binaryData = e.target.result;
-          //Converting Binary Data to base 64
-          var base64String = window.btoa(binaryData);
-          //showing file converted to base64
-          // document.getElementById('base64').value = base64String;
-          // alert('File converted to base64 successfuly!\nCheck in Textarea');
-        };
-      })(f);
-      // Read in the image file as a data URL.
-      reader.readAsBinaryString(f);
-    }
-    var BASE64_MARKER = base64String;
-
-function convertDataURIToBinary(dataURI) {
-  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-  var base64 = dataURI.substring(base64Index);
-  var raw = window.atob(base64);
-  var rawLength = raw.length;
-  var array = new Uint8Array(new ArrayBuffer(rawLength));
-
-  for(i = 0; i < rawLength; i++) {
-    array[i] = raw.charCodeAt(i);
-  }
-  return array;
-}
-console.log(array);
-  
     </script>
 </body>
 </html>
