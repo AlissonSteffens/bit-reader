@@ -12,7 +12,7 @@
 
 <body>
     <div class="inicio">
-        <textarea name="" id="image">ddddddddddddd</textarea>
+        <textarea name="" id="image"></textarea>
         <button onclick="create_image()">Fazer Imagem</button>
         <!-- <button onclick="convertDataURIToBinary(evt)"> Converter arquivo escolhido para bin</button> -->
     </div>
@@ -124,6 +124,8 @@ var i, len = u8Array.length, b_str = "";
     }
     
     binaryString = b_str;
+    var elemento = document.getElementById("imagem");
+        elemento.innerHTML = binaryString;
 	return b_str;
                 };
             })(f);
