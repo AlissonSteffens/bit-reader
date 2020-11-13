@@ -82,7 +82,7 @@
             // alert('The File APIs are not fully supported in this browser.');
         }
 
-        var binaryString;
+        var b_str;
         var u8Array;
         var BASE64_MARKER;
 
@@ -100,37 +100,25 @@
                     }
                     
                     u8Array = array;
-                    return array;
-                    //convertUint8ArrayToWordArray
+                    const toBinString = (bytes) =>
+                    bytes.reduce((str, byte) => str + byte.toString(2).padStart(8, '0'), '');
+                    b_str = toBinString(Uint8Array.from(u8Array));
+                    elemento = document.getElementById("image");
+                    elemento.innerHTML = b_str;
+                    
+                   
 
-                    var words = [], i = 0, len = u8Array.length;
 
-while (i < len) {
-    words.push(
-        (u8Array[i++] << 24) |
-        (u8Array[i++] << 16) |
-        (u8Array[i++] << 8)  |
-        (u8Array[i++])
-    );
-}
 
-return {
-    sigBytes: words.length * 4,
-    words: words
-};
-var i, len = u8Array.length, b_str = "";
-	for (i=0; i<len; i++) {
-		b_str += String.fromCharCode(u8Array[i]);
-    }
-    
-    binaryString = b_str;
-    var elemento = document.getElementById("imagem");
-        elemento.innerHTML = binaryString;
-	return b_str;
                 };
             })(f);
             reader.readAsBinaryString(f);
+            
+            
         }
+     
+
+        
 
     </script>
 </body>
