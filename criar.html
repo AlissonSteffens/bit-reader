@@ -12,6 +12,7 @@
     <div class="inicio">
         <textarea name="" id="image"></textarea>
         <button onclick="create_image()">Fazer Imagem</button>
+        <button onclick="handleFileSelect()"></button>
     </div>
 
     <div id= "file-js">
@@ -79,28 +80,13 @@
       // alert('The File APIs are not fully supported in this browser.');
     }
 
-    var BASE64_MARKER;
-    function handleFileSelect(evt) {
-      var f = evt.target.files[0]; // FileList object
-      var reader = new FileReader();
-      // Closure to capture the file information.
-      reader.onload = (function(theFile) {
-        return function(e) {
-          var binaryData = e.target.result;
-          //Converting Binary Data to base 64
-          var base64String = window.btoa(binaryData);
-          //showing file converted to base64
-          // document.getElementById('base64').value = base64String;
-          // alert('File converted to base64 successfuly!\nCheck in Textarea');
-          BASE64_MARKER = base64String
-        };
-      })(f);
-      // Read in the image file as a data URL.
-      reader.readAsBinaryString(f);
-    }
-    
 
-function convertDataURIToBinary(dataURI) {
+    
+    var BASE64_MARKER;
+
+    function convertDataURIToBinary(dataURI, evt) {
+      
+  var f = evt.target.files[0]; // FileList object
   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
   var base64 = dataURI.substring(base64Index);
   var raw = window.atob(base64);
@@ -113,6 +99,9 @@ function convertDataURIToBinary(dataURI) {
   return array;
   console.log(array);
 }
+    
+    
+
 
   
     </script>
