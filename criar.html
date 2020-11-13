@@ -12,7 +12,7 @@
     <div class="inicio">
         <textarea name="" id="image"></textarea>
         <button onclick="create_image()">Fazer Imagem</button>
-        <button onclick="handleFileSelect()"></button>
+        <button onclick="convertDataURIToBinary(dataURI, evt)"></button>
     </div>
 
     <div id= "file-js">
@@ -85,7 +85,7 @@
     var BASE64_MARKER;
 
     function convertDataURIToBinary(dataURI, evt) {
-      
+
   var f = evt.target.files[0]; // FileList object
   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
   var base64 = dataURI.substring(base64Index);
