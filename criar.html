@@ -12,7 +12,7 @@
 
 <body>
     <div class="inicio">
-        <textarea name="" id="image"></textarea>
+        <textarea name="" id="image">ddddddddddddd</textarea>
         <button onclick="create_image()">Fazer Imagem</button>
         <!-- <button onclick="convertDataURIToBinary(evt)"> Converter arquivo escolhido para bin</button> -->
     </div>
@@ -82,8 +82,8 @@
             // alert('The File APIs are not fully supported in this browser.');
         }
 
-
-
+        var binaryString;
+        var u8Array;
         var BASE64_MARKER;
 
         function convertDataURIToBinary(evt) {
@@ -98,9 +98,33 @@
                     for (i = 0; i < rawLength; i++) {
                         array[i] = raw.charCodeAt(i);
                     }
-                    console.log(array);
-                    return array;
                     
+                    u8Array = array;
+                    return array;
+                    //convertUint8ArrayToWordArray
+
+                    var words = [], i = 0, len = u8Array.length;
+
+while (i < len) {
+    words.push(
+        (u8Array[i++] << 24) |
+        (u8Array[i++] << 16) |
+        (u8Array[i++] << 8)  |
+        (u8Array[i++])
+    );
+}
+
+return {
+    sigBytes: words.length * 4,
+    words: words
+};
+var i, len = u8Array.length, b_str = "";
+	for (i=0; i<len; i++) {
+		b_str += String.fromCharCode(u8Array[i]);
+    }
+    
+    binaryString = b_str;
+	return b_str;
                 };
             })(f);
             reader.readAsBinaryString(f);
