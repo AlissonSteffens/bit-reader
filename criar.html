@@ -9,7 +9,6 @@
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
 </head>
-
 <body>
     <div class="inicio">
         <textarea name="" id="image"></textarea>
@@ -25,7 +24,7 @@
 
     <canvas id="myCanvas" width="800" height="600"></canvas>
     <script>
-        var pixelsize = 10
+        var pixelsize = 1
         // convert 0..255 R,G,B values to a hexidecimal color string
         RGBToHex = function (r, g, b) {
             var bin = r << 16 | g << 8 | b;
@@ -86,39 +85,82 @@
         var u8Array;
         var BASE64_MARKER;
 
-        function convertDataURIToBinary(evt) {
+        function convertBase64ToPixelsArray(base64DataUrl,callback) {
+            var mCanvas = document.createElement("canvas");
+            var ctx = mCanvas.getContext("2d");
+            var pixelsArray = [];
+            var img = document.createElement("img");
+            img.onload = getRGB;
+            img.src = base64DataUrl;
 
-            var f = evt.target.files[0]; 
+            function getRGB() {
+                mCanvas.width = img.width;
+                mCanvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                var data = ctx.getImageData(0, 0, mCanvas.width, mCanvas.height).data;
+                for (var i = 0; i < data.length; i += 4) {
+                    pixelsArray.push([data[i], data[i + 1], data[i + 2]]);
+                }
+                callback(pixelsArray);
+            }
+        }
+
+        async function convertDataURIToBinary(evt) {
+            var f = evt.target.files[0];
             var reader = new FileReader();
             reader.onload = (function (theFile) {
-                return function (e) {
-                    var raw = e.target.result;
-                    var rawLength = raw.length;
-                    var array = new Uint8Array(new ArrayBuffer(rawLength));
-                    for (i = 0; i < rawLength; i++) {
-                        array[i] = raw.charCodeAt(i);
-                    }
-                    
-                    u8Array = array;
-                    const toBinString = (bytes) =>
-                    bytes.reduce((str, byte) => str + byte.toString(2).padStart(8, '0'), '');
-                    b_str = toBinString(Uint8Array.from(u8Array));
-                    elemento = document.getElementById("image");
-                    elemento.innerHTML = b_str;
-                    
-                   
-
-
+                return async function (e) {
+                    let b64 = await toBase64(theFile);
+                    let size = await getImageDimensions(b64);
+                    console.log(b64)
+                    let a = convertBase64ToPixelsArray(b64,(arr)=>{
+                        var binstr = ''
+                        var count = 0
+                        arr.forEach((pix) =>{
+                            var pixel = ''
+                            pix.forEach((lay)=>{
+                                pixel+= Number(lay).toString(2).padStart(8, '0')
+                            })
+                            binstr+= pixel+',';
+                            console.log(size.w)
+                            
+                            count++;
+                            if(count%size.w == 0){
+                                binstr+='\n'
+                            }
+                        })
+                        elemento = document.getElementById("image");
+                        elemento.innerHTML = binstr;
+                    });
 
                 };
             })(f);
             reader.readAsBinaryString(f);
-            
-            
-        }
-     
 
-        
+
+        }
+
+        const chunk = (arr, n) => arr.length ? [arr.slice(0, n), ...chunk(arr.slice(n), n)] : []
+
+        function getImageDimensions(file) {
+            return new Promise(function (resolved, rejected) {
+                var i = new Image()
+                i.onload = function () {
+                    resolved({ w: i.width, h: i.height })
+                };
+                i.src = file
+            })
+        }
+
+
+
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
 
     </script>
 </body>
