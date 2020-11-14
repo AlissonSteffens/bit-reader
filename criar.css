@@ -4,33 +4,156 @@ html, body {
     margin: 0;
     padding: 0;
 }
-body {
-    color: white;
-    display: flex;
+.loading{
+
+    position: absolute;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    display: none;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    font-size: 3rem;
+}
+.progress{
+    position: absolute;
+    top: 0;
+    background-color: black;
+    border-radius: 0;
+}
+progress[value]::-webkit-progress-bar {
+    background-color: #000;
+}
+
+progress[value]::-webkit-progress-value {
+    background-color: white;
+}
+body {
+    color: white;
+    min-height: 100vh;
     background: url("https://images.unsplash.com/photo-1480506132288-68f7705954bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1093&q=80") no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 100%;
     font-family: 'Lato', sans-serif;
   
 }
-.main {
-    
-    margin: 0;
-    padding: 0;
+.hero{
+    display: flex;
+    align-items: center;
     justify-content: center;
-    backdrop-filter: blur(5px) brightness(50%);
-    padding: 2rem;
-    border-radius: 20px;
-    text-align: center;
+    padding: 3rem;
 }
-
+.subtitle{
+    color: white;
+    margin-top: 2rem;
+}
+.title{
+    text-align: center;
+    color: white;
+}
+.nav{
+    display: flex;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+}
+.nav>div{
+    margin: 10px;
+}
+.main {
+    backdrop-filter: blur(30px);
+    padding: 2rem;
+    min-height: 50vh;
+}
+.tip{
+    color: black;
+}
+.notification{
+    position: absolute;
+    top: 10px;
+    width: 400px;
+    right: 10px;
+    z-index: 8;
+}
+.notification>button{
+    margin-top: 1rem;
+}
 .textarea {
 
     border-radius: 20px;
 
 }
+
+
+.lds-grid {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-grid div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    animation: lds-grid 1.2s linear infinite;
+  }
+  .lds-grid div:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
+  }
+  .lds-grid div:nth-child(2) {
+    top: 8px;
+    left: 32px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(3) {
+    top: 8px;
+    left: 56px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(4) {
+    top: 32px;
+    left: 8px;
+    animation-delay: -0.4s;
+  }
+  .lds-grid div:nth-child(5) {
+    top: 32px;
+    left: 32px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(6) {
+    top: 32px;
+    left: 56px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(7) {
+    top: 56px;
+    left: 8px;
+    animation-delay: -0.8s;
+  }
+  .lds-grid div:nth-child(8) {
+    top: 56px;
+    left: 32px;
+    animation-delay: -1.2s;
+  }
+  .lds-grid div:nth-child(9) {
+    top: 56px;
+    left: 56px;
+    animation-delay: -1.6s;
+  }
+  @keyframes lds-grid {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
